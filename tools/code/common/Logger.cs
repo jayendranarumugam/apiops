@@ -124,18 +124,26 @@ public sealed record LoggerModel
             public string? ConnectionString { get; init; }
             public string? InstrumentationKey { get; init; }
 
+            public string? EndpointAddress {get;init;}
+
+            public string? IdentityClientId {get;init;}
+
             public JsonObject Serialize() =>
                 new JsonObject()
                     .AddPropertyIfNotNull("name", Name)
                     .AddPropertyIfNotNull("connectionString", ConnectionString)
-                    .AddPropertyIfNotNull("instrumentationKey", InstrumentationKey);
+                    .AddPropertyIfNotNull("instrumentationKey", InstrumentationKey)
+                    .AddPropertyIfNotNull("endpointAddress", EndpointAddress)
+                    .AddPropertyIfNotNull("identityClientId", IdentityClientId);
 
             public static LoggerCredentials Deserialize(JsonObject jsonObject) =>
                 new()
                 {
                     Name = jsonObject.TryGetStringProperty("name"),
                     ConnectionString = jsonObject.TryGetStringProperty("connectionString"),
-                    InstrumentationKey = jsonObject.TryGetStringProperty("instrumentationKey")
+                    InstrumentationKey = jsonObject.TryGetStringProperty("instrumentationKey"),
+                    EndpointAddress = jsonObject.TryGetStringProperty("endpointAddress"),
+                    IdentityClientId = jsonObject.TryGetStringProperty("identityClientId")
                 };
         }
 
